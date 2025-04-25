@@ -1,0 +1,133 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f8f9fa; /* Lighter background */
+    margin: 0;
+    display: flex;
+    min-height: 100vh;
+}
+.admin-title {
+    font-family: 'Playfair Display', serif;
+}
+.card {
+    border: none;
+    border-radius: 0.5rem; /* Slightly rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem; /* Consistent spacing */
+}
+.login-form {
+    max-width: 450px; /* Slightly wider */
+    margin: 5rem auto; /* More vertical centering */
+}
+.admin-header {
+    background-color: #8B4513; /* Saddle Brown - a warmer tone */
+    color: white;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+ .admin-header h5 {
+     margin-bottom: 0;
+     font-weight: 600; /* Bolder header text */
+ }
+.reservation-card {
+    transition: all 0.2s ease-in-out;
+}
+.reservation-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 260px; /* Slightly wider */
+    background-color: #343a40;
+    color: white;
+    padding-top: 1rem;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+.sidebar .nav-link {
+    color: #ced4da; /* Lighter gray */
+    padding: 0.85rem 1.25rem;
+    font-size: 0.95rem;
+    border-left: 3px solid transparent; /* For active state */
+    transition: all 0.2s ease;
+}
+.sidebar .nav-link i {
+     margin-right: 0.75rem; /* More space for icon */
+     width: 20px; /* Fixed width for alignment */
+     text-align: center;
+}
+.sidebar .nav-link:hover {
+    color: #ffffff;
+    background-color: #495057;
+    border-left-color: #adb5bd;
+}
+.sidebar .nav-link.active {
+    color: #ffffff;
+    background-color: #007bff; /* Bootstrap primary */
+    border-left-color: #ffffff;
+    font-weight: 500;
+}
+.sidebar-heading {
+    padding: 1rem 1.25rem;
+    font-size: 1.1rem; /* Smaller heading */
+    color: #ffffff;
+    font-family: 'Playfair Display', serif;
+    border-bottom: 1px solid #495057; /* Separator */
+    margin-bottom: 1rem; /* Space below heading */
+}
+.sidebar-footer {
+     margin-top: auto; /* Pushes footer to the bottom */
+     padding: 1rem;
+     font-size: 0.8rem;
+     color: #adb5bd;
+     text-align: center;
+}
+
+
+/* Main Content Area */
+.main-content {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+     body { flex-direction: column; } /* Stack sidebar and content */
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding-top: 0;
+        flex-direction: row; /* Make nav horizontal */
+        overflow-x: auto; /* Allow horizontal scroll for nav */
+        justify-content: space-around; /* Distribute links */
+    }
+     .sidebar .nav-item { flex-shrink: 0; } /* Prevent links shrinking */
+     .sidebar-heading { display: none; } /* Hide heading on small screens */
+     .sidebar-footer { display: none; } /* Hide footer on small screens */
+    .main-content {
+        padding: 1rem;
+    }
+    .login-form { margin: 2rem auto; }
+}
+
+/* Styles for reservation status */
+.status-pending { color: #fd7e14; font-weight: 500; } /* Bootstrap orange */
+.status-confirmed { color: #198754; font-weight: 500; } /* Bootstrap green */
+.status-cancelled { color: #dc3545; font-weight: 500; } /* Bootstrap red */
+
+/* Action buttons styling */
+.action-buttons .btn,
+.action-buttons .badge {
+     margin-left: 5px; /* Space between buttons */
+     vertical-align: middle; /* Align items nicely */
+}
+ .action-buttons form {
+     display: inline-block; /* Keep forms side-by-side */
+     margin: 0;
+     padding: 0;
+ }
+.reservation-details p { margin-bottom: 0.4rem; } /* Tighter spacing */
+.reservation-details small { color: #6c757d; } /* Standard muted color */
