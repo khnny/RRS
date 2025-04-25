@@ -132,31 +132,38 @@ if (isset($_SESSION['admin_authenticated']) && $_SESSION['admin_authenticated'] 
          } else {
              redirect_with_message('reservations', 'error', 'Insufficient permissions to ' . $action . ' reservation.');
          }
-    } elseif ($action === 'delete' && isset($_POST['reservation_id'])) {
-        // --- Only Admin or Super Admin can delete reservations ---
-        if (check_permission('admin')) { // Adjusted permission check for delete reservation
-            $reservation_id = filter_input(INPUT_POST, 'reservation_id', FILTER_SANITIZE_NUMBER_INT);
-            if ($reservation_id !== false && $reservation_id !== null) {
-                 $sql = "DELETE FROM table_booking WHERE id = ?";
-                 $stmt = $conn->prepare($sql);
-                 if ($stmt) {
-                     $stmt->bind_param("i", $reservation_id);
-                      if ($stmt->execute()) {
-                         redirect_with_message('reservations', 'success', 'Reservation successfully deleted!');
-                     } else {
-                         error_log("Error executing statement (delete) for ID $reservation_id: " . $stmt->error);
-                         redirect_with_message('reservations', 'error', 'Error deleting reservation.');
-                     }
-                     $stmt->close();
-                 } else {
-                      error_log("Error preparing statement (delete) for ID $reservation_id: " . $conn->error);
-                     redirect_with_message('reservations', 'error', 'Error preparing database statement.');
-                 }
+
+
+
+
+
+} elseif ($action === 'add_user') {
+        $username = trim($_POST['username']);
+        $password = $_POST['password'];  
+        $role = $_POST['role'];
+        $full_name = $_POST['full_name'];
+        $email = $_POST['email'];
+        
+        if (!empty($username) && !empty($password) && !empty($role) && !empty($full_name) && !empty($email)) {
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        
+            $stmt = $conn->prepare("INSERT INTO adminpanel_users (username, password_hash, role, full_name, email, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())");
+        
+            if ($stmt) {
+                $stmt->bind_param("sssss", $username, $password_hash, $role, $full_name, $email);
+        
+                if ($stmt->execute()) {
+                    $_SESSION['success'] = "User successfully added!";
+                } else {
+                    $_SESSION['error'] = "Execute failed: " . $stmt->error;
+                }
+        
+                $stmt->close();
             } else {
-                redirect_with_message('reservations', 'error', 'Invalid reservation ID.');
+                $_SESSION['error'] = "Prepare failed: " . $conn->error;
             }
         } else {
-            redirect_with_message('reservations', 'error', 'Insufficient permissions to delete reservation.');
+            $_SESSION['error'] = "All fields are required!";
         }
     }
 
