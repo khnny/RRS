@@ -103,15 +103,14 @@ if ($conn) {
 
                                     <?php // Delete User Form - posts back to admin.php ?>
                                     <?php // Only show delete if NOT the current logged in user and has super admin permission ?>
-                                    <?php if ($user['id'] != $_SESSION['user_id'] && check_permission('super_admin')): ?>
-                                        <form action="" method="post" class="d-inline delete-user-form">
-                                            <input type="hidden" name="action" value="delete_user">
-                                            <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
-                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete User">
-                                                <i class="fas fa-trash-alt"></i> Delete
-                                            </button>
+                                    <?php if ($user['role'] !== 'Super_admin'): ?>
+                                    <form action="delete_user.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                   <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
+                                  <button type="submit" class="btn btn-sm btn-outline-danger">
+                                   <i class="fas fa-trash" style="color: red;"></i> Delete
+                                        </button>
                                         </form>
-                                    <?php endif; ?>
+                                    <?php endif; ?> 
                                 </td>
                             </tr>
                         <?php endforeach; ?>
